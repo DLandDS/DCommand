@@ -1,0 +1,4 @@
+name: DCommandLib
+version: '${project.version}'
+main: me.dlands.dcommandlib.plugin.DCommandLibPlugin
+api-version: 1.16

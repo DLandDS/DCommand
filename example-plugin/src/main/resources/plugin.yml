@@ -1,0 +1,10 @@
+name: ExamplePluginDCommandLib
+version: '${project.version}'
+main: me.dlands.exampleplugin.Main
+api-version: 1.16
+commands:
+  testcommand:
+    usage: /  testcommand help
+    description: "Testcommand doang ini"
+depend:
+  - DCommandLib
