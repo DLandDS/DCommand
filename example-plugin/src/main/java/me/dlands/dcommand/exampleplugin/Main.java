@@ -1,8 +1,8 @@
-package me.dlands.exampleplugin;
+package me.dlands.dcommand.exampleplugin;
 
 import me.dlands.dcommandlib.api.DCommandLibrary;
 import me.dlands.dcommandlib.api.command.CommandEvent;
-import me.dlands.dcommandlib.api.command.ICommands;
+import me.dlands.dcommandlib.api.command.DCommands;
 import me.dlands.dcommandlib.api.command.annotation.AutoComplete;
 import me.dlands.dcommandlib.api.command.annotation.CommandExecute;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public final class Main extends JavaPlugin implements ICommands {
+public final class Main extends JavaPlugin implements DCommands {
 
     @Override
     public void onEnable() {

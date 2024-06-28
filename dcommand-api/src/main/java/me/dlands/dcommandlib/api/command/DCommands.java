@@ -1,5 +1,5 @@
 package me.dlands.dcommandlib.api.command;
 
-public interface ICommands {
+public interface DCommands {
     String getCommandName();
 }

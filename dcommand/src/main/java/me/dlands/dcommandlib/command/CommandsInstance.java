@@ -3,7 +3,7 @@ package me.dlands.dcommandlib.command;
 import me.dlands.dcommandlib.api.command.annotation.AutoComplete;
 import me.dlands.dcommandlib.api.command.CommandEvent;
 import me.dlands.dcommandlib.api.command.annotation.CommandExecute;
-import me.dlands.dcommandlib.api.command.ICommands;
+import me.dlands.dcommandlib.api.command.DCommands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,10 +17,10 @@ public class CommandsInstance implements TabCompleter, CommandExecutor {
 
     final HashMap<String, Execution> executor = new HashMap<>();
     final HashMap<String, Execution> completor = new HashMap<>();
-    final ICommands commands;
+    final DCommands DCommands;
 
-    public CommandsInstance(ICommands commands) {
-        this.commands = commands;
+    public CommandsInstance(DCommands DCommands) {
+        this.DCommands = DCommands;
         Class<CommandsInstance> commandsInstanceClass = CommandsInstance.class;
         for (Method method : commandsInstanceClass.getDeclaredMethods()) {
             if (method.isAnnotationPresent(CommandExecute.class)) {
@@ -32,15 +32,15 @@ public class CommandsInstance implements TabCompleter, CommandExecutor {
                 completor.put(autoComplete.command(), new Execution(this, method));
             }
         }
-        Class<?> clazz = commands.getClass();
+        Class<?> clazz = DCommands.getClass();
         for (Method method : clazz.getDeclaredMethods()) {
             if (method.isAnnotationPresent(CommandExecute.class)) {
                 CommandExecute commandExecute = method.getAnnotation(CommandExecute.class);
-                executor.put(commandExecute.command(), new Execution(commands, method));
+                executor.put(commandExecute.command(), new Execution(DCommands, method));
             }
             if (method.isAnnotationPresent(AutoComplete.class)) {
                 AutoComplete autoComplete = method.getAnnotation(AutoComplete.class);
-                completor.put(autoComplete.command(), new Execution(commands, method));
+                completor.put(autoComplete.command(), new Execution(DCommands, method));
             }
         }
         for(Execution execution : executor.values()){
@@ -83,12 +83,12 @@ public class CommandsInstance implements TabCompleter, CommandExecutor {
             if (i >= commandsString.size()) break;
             CommandExecute commandExecute = executor.get(commandsString.get(i)).method.getAnnotation(CommandExecute.class);
             message.append("\n" + ChatColor.GOLD).append(commandExecute.command())
-                    .append(" : /" + commands.getCommandName() + " ").append(commandExecute.command().toLowerCase(Locale.ROOT)).append(" ")
+                    .append(" : /" + DCommands.getCommandName() + " ").append(commandExecute.command().toLowerCase(Locale.ROOT)).append(" ")
                     .append(commandExecute.usages()).append(ChatColor.RESET + "\n");
             message.append("  ").append(commandExecute.description());
         }
         if(page + 1 < maxPage){
-            message.append("\n" + ChatColor.GREEN + "Type /" + commands.getCommandName() + " help " + ChatColor.GOLD.toString() + (page+2) + ChatColor.GREEN.toString() + " to see more commands");
+            message.append("\n" + ChatColor.GREEN + "Type /" + DCommands.getCommandName() + " help " + ChatColor.GOLD.toString() + (page+2) + ChatColor.GREEN.toString() + " to see more commands");
         }
         event.getSender().sendMessage(message.toString());
         return true;
